@@ -34,8 +34,8 @@ export default async function Search({ question }: { question: string }) {
   return (
     <div className="container mx-auto px-4 py-6 flex flex-col">
       <h1 className="text-3xl font-bold mb-8 text-center">LibreScholar</h1>
-      <form className="flex w-full max-w-md items-center space-x-2 mb-8 justify-center" action="/">
-        <Input className="w-full" placeholder="Enter a research question" name="question" type="text" />
+      <form className="flex w-full max-w-xl items-center space-x-2 mb-8 justify-center" action="/">
+        <Input className="w-full" placeholder="Enter a research question" name="question" type="text" defaultValue={question} />
         <Button type="submit">Search</Button>
       </form>
       { searchTerms }
