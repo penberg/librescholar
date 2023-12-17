@@ -16,9 +16,7 @@ export function Search() {
       <h2 className="text-2xl font-semibold mb-4 text-center">Relevant Scientific Publications:</h2>
       <ul className="list-disc list-inside mb-6 text-center">
         <li className="mb-2">
-          J Tan, C Liang, H Xie, Q Xu, J Hu, H Zhu (2022).
-          <b>Justitia: Software Multi-Tenancy in Hardware Kernel-Bypass Networks</b>. In <i>NSDI'22</i>. [
-          <a href="#">PDF</a>]{"\n              "}
+          J Tan, C Liang, H Xie, Q Xu, J Hu, H Zhu (2022). <b>Justitia: Software Multi-Tenancy in Hardware Kernel-Bypass Networks</b>. In <i>NSDI 22</i>.
         </li>
       </ul>
       <div className="grid grid-cols-1 gap-6 justify-items-center" />
