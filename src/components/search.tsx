@@ -1,5 +1,5 @@
 import OpenAI from 'openai';
-import { search as searchGoogleScholar } from "scholarly";
+import { getJson } from "serpapi";
 
 const openai = new OpenAI({
   apiKey: process.env['OPENAI_API_KEY'],
@@ -17,7 +17,25 @@ export default async function Search({ question }: { question: string }) {
       messages: [{ role: 'user', content: prompt }],
     });
     const keywords = completion.choices[0]?.message?.content!;
-    const results = await searchGoogleScholar(keywords!);
+    const response = await getJson({
+      engine: "google_scholar",
+      api_key: process.env['SERPAPI_API_KEY'],
+      q: keywords!,
+    });
+    const results = response.organic_results.map((result: any) => {
+      const authors = result.publication_info.authors.map((author: any) => {
+        return author.name;
+      });
+      const title = result.title;
+      const url = result.link;
+      const numCitations = result.inline_links.cited_by.total;
+      return {
+        authors,
+        title,
+        url,
+        numCitations
+      };
+    });
     return [keywords, results];
   }
   const [keywords, results] = await search(question);
@@ -48,7 +66,7 @@ export default async function Search({ question }: { question: string }) {
       {
         results.map((result: any) => (
           <li className="mb-2" key={result.title}>
-            <b><a href={result.url}>{result.title}</a></b> {result.year} ({result.numCitations} citations)
+            {result.authors.join(", ")}. <b>{result.title}</b>. <a href={result.url}>[PDF]</a> ({result.numCitations} citations)
           </li>
         ))
       }
