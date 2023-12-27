@@ -29,7 +29,7 @@ export default async function Search({ question }: { question: string }) {
       });
       const title = result.title;
       const url = result.link;
-      const numCitations = result.inline_links.cited_by.total;
+      const numCitations = result.inline_links.cited_by?.total || 0;
       return {
         authors,
         title,
