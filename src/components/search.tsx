@@ -23,7 +23,8 @@ export default async function Search({ question }: { question: string }) {
       q: keywords!,
     });
     const results = response.organic_results.map((result: any) => {
-      const authors = result.publication_info.authors.map((author: any) => {
+      const rawAuthors = result.publication_info.authors || [];
+      const authors = rawAuthors.map((author: any) => {
         return author.name;
       });
       const title = result.title;
@@ -66,7 +67,7 @@ export default async function Search({ question }: { question: string }) {
       {
         results.map((result: any) => (
           <li className="mb-2" key={result.title}>
-            {result.authors.join(", ")}. <b>{result.title}</b>. <a href={result.url}>[PDF]</a> ({result.numCitations} citations)
+            {result.authors.length > 0 ? result.authors.join(", ") + "." : "" } <b>{result.title}</b>. <a href={result.url}>[PDF]</a> ({result.numCitations} citations)
           </li>
         ))
       }
