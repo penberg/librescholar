@@ -9,7 +9,7 @@ export default function Home({ params, searchParams }: { params: any, searchPara
       <div>
         <h1>Academic Paper Search</h1>
       </div>
-      <p>Example: <a href="?question=What%20is%20the%20state%20of%20art%20in%20large%20language%20models">"What is the state of art in large language models?"</a></p>
+      <p>Example: <a href="?question=What%20is%20the%20state%20of%20art%20in%20large%20language%20models">What is the state of art in large language models?</a></p>
       <Search question={question}></Search>
     </main>
   )
