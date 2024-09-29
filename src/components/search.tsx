@@ -22,21 +22,27 @@ export default async function Search({ question }: { question: string }) {
       api_key: process.env['SERPAPI_API_KEY'],
       q: scholarQuery!,
     });
-    const results = response.organic_results.map((result: any) => {
+    let organicResults = response.organic_results || [];
+    let results: any[] = [];
+    for (const result of organicResults) {
+      if (!result.publication_info) {
+        continue;
+      }
       const rawAuthors = result.publication_info.authors || [];
       const authors = rawAuthors.map((author: any) => {
         return author.name;
       });
       const title = result.title;
       const url = result.link;
-      const numCitations = result.inline_links.cited_by?.total || 0;
-      return {
+      const numCitations = result.inline_links?.cited_by?.total || 0;
+      results.push({
         authors,
         title,
         url,
         numCitations
-      };
-    });
+      });
+    }
+    results.sort((a, b) => b.numCitations - a.numCitations);
     return [scholarQuery, results];
   }
   const [scholarQuery, results] = await search(question);
