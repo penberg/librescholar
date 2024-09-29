@@ -11,7 +11,7 @@ export default async function Search({ question }: { question: string }) {
     if (!question) {
       return ["", []];
     }
-    const prompt = `Please generate a serch query for Google Scholar to find relevant papers for the following research question: "${question}". The output must be a valid Google Scholar search query, but nothing more.`;
+    const prompt = `Please generate a serch query for Google Scholar to find relevant papers for the following research question: "${question}". The output must be a valid Google Scholar search query, but nothing more. Make the query relaxed without quotation marks.`;
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o',
       messages: [{ role: 'user', content: prompt }],
