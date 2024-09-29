@@ -11,16 +11,16 @@ export default async function Search({ question }: { question: string }) {
     if (!question) {
       return ["", []];
     }
-    const prompt = `Please generate a list of keywords to use on Google Scholar to find relevant papers for the following research question: "${question}" The output must be a list of words, separated by spaces, but nothing more.`;
+    const prompt = `Please generate a serch query for Google Scholar to find relevant papers for the following research question: "${question}". The output must be a valid Google Scholar search query, but nothing more.`;
     const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o',
       messages: [{ role: 'user', content: prompt }],
     });
-    const keywords = completion.choices[0]?.message?.content!;
+    const scholarQuery = completion.choices[0]?.message?.content!;
     const response = await getJson({
       engine: "google_scholar",
       api_key: process.env['SERPAPI_API_KEY'],
-      q: keywords!,
+      q: scholarQuery!,
     });
     const results = response.organic_results.map((result: any) => {
       const rawAuthors = result.publication_info.authors || [];
@@ -37,14 +37,14 @@ export default async function Search({ question }: { question: string }) {
         numCitations
       };
     });
-    return [keywords, results];
+    return [scholarQuery, results];
   }
-  const [keywords, results] = await search(question);
+  const [scholarQuery, results] = await search(question);
   var searchTerms = null;
   if (question) {
     searchTerms = (
       <p className="mb-6">
-        <b>Search terms:</b> {keywords}
+        <b>Google Scholar query:</b> {scholarQuery}
       </p>
     )
   }
