@@ -50,11 +50,11 @@ export default async function Search({ question }: { question: string }) {
   }
   return (
     <div>
-      <p><i>Please type a research question below to find a list of relevant publications:</i></p>
+    <b>Research Question:</b>
     <div id="search-box">
       <form action="/">
         <div id="search-box">
-          <input style={{width: "100%"}} placeholder="Enter a research question" name="question" type="text" defaultValue={question} />
+          <textarea style={{width: "100%"}} placeholder="Enter a research question" name="question" type="text" defaultValue={question} />
         </div>
         <div id="search-button">
           <button type="submit">Search</button>
