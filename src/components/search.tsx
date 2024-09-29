@@ -73,7 +73,7 @@ export default async function Search({ question }: { question: string }) {
       {
         results.map((result: any) => (
           <li className="mb-2" key={result.title}>
-            {result.authors.length > 0 ? result.authors.join(", ") + "." : "" } <b>{result.title}</b>. [<a href={result.url}>PDF</a>] ({result.numCitations} citations)
+            {result.authors.length > 0 ? result.authors.join(", ") + "." : "" } <a href={result.url}>{result.title}</a>. ({result.numCitations} citations)
           </li>
         ))
       }
